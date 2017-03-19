@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Fideloper\Proxy\TrustProxies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -57,4 +58,15 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
+
+    public function handle($request)
+    {
+        if (env('APP_TRUST_PROXIES', false)) {
+            // handle Heroku proxies correctly
+            $this->middleware[] = TrustProxies::class;
+        }
+
+        return parent::handle($request);
+    }
+
 }
