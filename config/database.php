@@ -58,10 +58,10 @@ return [
             'port' => env('DB_PORT', '5432'),
 
             // Heroku provides a single URL for the database credentials - parse from this or fall back to previous config
-            'host' => (false !== env('DATABASE_URL', false)) ? parse_url(env("DATABASE_URL"))["host"] : env('DB_HOST', '127.0.0.1'),
-            'database' => (false !== env('DATABASE_URL', false)) ? substr(parse_url(env("DATABASE_URL"))["path"], 1) : env('DB_DATABASE', 'forge'),
-            'username' => (false !== env('DATABASE_URL', false)) ? parse_url(env("DATABASE_URL"))["user"] : env('DB_USERNAME', 'forge'),
-            'password' => (false !== env('DATABASE_URL', false)) ? parse_url(env("DATABASE_URL"))["pass"] : env('DB_PASSWORD', ''),
+            'host'     => parse_url(getenv("DATABASE_URL"))["host"],
+            'database' => substr(parse_url(getenv("DATABASE_URL"))["path"], 1),
+            'username' => parse_url(getenv("DATABASE_URL"))["user"],
+            'password' => parse_url(getenv("DATABASE_URL"))["pass"],
 
             'charset' => 'utf8',
             'prefix' => '',
